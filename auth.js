@@ -1,56 +1,52 @@
-// auth.js
+// auth.js - расширенная версия
 const AUTH_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
+const TOKEN_KEY = 'cat_auth_token';
 
 // Проверка авторизации при загрузке страницы
-function checkAuth() {
-  if (!localStorage.getItem('authToken')) {
+export function checkAuth() {
+  if (!getToken() && !isLoginPage()) {
     redirectToLogin();
   }
 }
 
-// Перенаправление на страницу входа
-function redirectToLogin() {
-  if (!window.location.pathname.includes('index.html')) {
-    window.location.href = '/index.html';
-  }
+// Получение токена
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
 }
 
-// Функция входа
-async function login(login, password) {
+// Вход в систему
+export async function login(username, password) {
   try {
     const response = await fetch(AUTH_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ login, password })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ login: username, password })
     });
     
     const data = await response.json();
     
     if (data.success) {
-      localStorage.setItem('authToken', 'demoAuthToken');
+      localStorage.setItem(TOKEN_KEY, 'generated-token');
       return true;
     }
     return false;
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Auth error:', error);
     return false;
   }
 }
 
-// Функция выхода
-function logout() {
-  localStorage.removeItem('authToken');
+// Выход из системы
+export function logout() {
+  localStorage.removeItem(TOKEN_KEY);
   redirectToLogin();
 }
 
-// Инициализация кнопки выхода
-function initLogoutButton() {
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', logout);
-  }
+// Вспомогательные функции
+function redirectToLogin() {
+  window.location.href = '/app/login.html';
 }
 
-export { checkAuth, login, logout, initLogoutButton };
+function isLoginPage() {
+  return window.location.pathname.includes('login.html');
+}
