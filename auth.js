@@ -1,52 +1,28 @@
-// auth.js - расширенная версия
-const AUTH_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
-const TOKEN_KEY = 'cat_auth_token';
+const API_URL = 'https://functions.yandexcloud.net/your-function-id'; // замените на свою ЯФ
 
-// Проверка авторизации при загрузке страницы
-export function checkAuth() {
-  if (!getToken() && !isLoginPage()) {
-    redirectToLogin();
-  }
-}
+async function login() {
+  const login = document.getElementById('login').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorEl = document.getElementById('error');
 
-// Получение токена
-export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
-}
-
-// Вход в систему
-export async function login(username, password) {
   try {
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ login: username, password })
+      body: JSON.stringify({ login, password })
     });
-    
-    const data = await response.json();
-    
-    if (data.success) {
-      localStorage.setItem(TOKEN_KEY, 'generated-token');
-      return true;
+
+    const result = await response.json();
+
+    if (result.success) {
+      localStorage.setItem('auth', 'true');
+      window.location.href = 'index.html'; // переадресация на главную
+    } else {
+      errorEl.textContent = result.message || 'Ошибка авторизации';
+      errorEl.style.display = 'block';
     }
-    return false;
-  } catch (error) {
-    console.error('Auth error:', error);
-    return false;
+  } catch (e) {
+    errorEl.textContent = 'Ошибка сети или сервера';
+    errorEl.style.display = 'block';
   }
-}
-
-// Выход из системы
-export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
-  redirectToLogin();
-}
-
-// Вспомогательные функции
-function redirectToLogin() {
-  window.location.href = '/app/login';
-}
-
-function isLoginPage() {
-  return window.location.pathname.includes('login');
 }
