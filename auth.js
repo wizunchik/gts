@@ -1,43 +1,49 @@
-const AUTH_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
-const TOKEN_KEY = 'gts_auth';
+// Конфигурация API
+const API_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
+const TOKEN_KEY = 'cat_auth_token';
 
-async function login(username, password) {
+// Функция входа
+export async function login(username, password) {
   try {
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(API_URL, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
       },
-      body: JSON.stringify({ login: username, password }),
-      credentials: 'omit'
+      body: JSON.stringify({ login: username, password })
     });
-    
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error('Ошибка сервера');
     }
-    
+
     const data = await response.json();
     
-    if (data.success && data.token) {
+    if (data.success) {
+      // Сохраняем токен и данные пользователя
       localStorage.setItem(TOKEN_KEY, data.token);
       return true;
+    } else {
+      throw new Error(data.message || 'Неверные учетные данные');
     }
-    
-    return false;
   } catch (error) {
-    console.error('Login failed:', error);
+    console.error('Ошибка входа:', error);
     throw error;
   }
 }
 
-function logout() {
+// Функция выхода
+export function logout() {
   localStorage.removeItem(TOKEN_KEY);
-  window.location.href = '/auth/login.html';
+  window.location.href = '/app/login';
 }
 
-function checkAuth() {
+// Проверка авторизации
+export function checkAuth() {
   return !!localStorage.getItem(TOKEN_KEY);
 }
 
-export { login, logout, checkAuth };
+// Получение токена
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
