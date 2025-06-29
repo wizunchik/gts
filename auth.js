@@ -30,7 +30,7 @@ async function login(login, password) {
 // Функция выхода
 function logout() {
   localStorage.removeItem(TOKEN_KEY);
-  window.location.href = '/auth/login.html';
+  window.location.href = '/app/login.html';
 }
 
 // Проверка авторизации
