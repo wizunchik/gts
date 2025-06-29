@@ -1,4 +1,4 @@
-const API_URL = 'https://functions.yandexcloud.net/your-function-id'; // замените на свою ЯФ
+const API_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j'; // замените на свою ЯФ
 
 async function login() {
   const login = document.getElementById('login').value.trim();
