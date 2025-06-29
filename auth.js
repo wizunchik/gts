@@ -1,14 +1,9 @@
-// Конфигурация
+// Убедитесь, что файл auth.js содержит правильные экспорты
 const AUTH_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
 const TOKEN_KEY = 'cat_auth';
 
-// Проверка авторизации
-export function checkAuth() {
-  return !!localStorage.getItem(TOKEN_KEY);
-}
-
-// Вход в систему
-export async function login(login, password) {
+// Функция входа
+async function login(login, password) {
   try {
     const response = await fetch(AUTH_URL, {
       method: 'POST',
@@ -32,16 +27,16 @@ export async function login(login, password) {
   }
 }
 
-// Выход из системы
-export function logout() {
+// Функция выхода
+function logout() {
   localStorage.removeItem(TOKEN_KEY);
   window.location.href = '/auth/login.html';
 }
 
-// Инициализация кнопки выхода
-export function initLogoutButton() {
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', logout);
-  }
+// Проверка авторизации
+function checkAuth() {
+  return !!localStorage.getItem(TOKEN_KEY);
 }
+
+// Экспортируем функции
+export { login, logout, checkAuth };
