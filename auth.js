@@ -44,9 +44,9 @@ export function logout() {
 
 // Вспомогательные функции
 function redirectToLogin() {
-  window.location.href = '/app/login.html';
+  window.location.href = '/app/login';
 }
 
 function isLoginPage() {
-  return window.location.pathname.includes('login.html');
+  return window.location.pathname.includes('login');
 }
