@@ -1,28 +1,47 @@
-const API_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j'; // замените на свою ЯФ
+// Конфигурация
+const AUTH_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
+const TOKEN_KEY = 'cat_auth';
 
-async function login() {
-  const login = document.getElementById('login').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const errorEl = document.getElementById('error');
+// Проверка авторизации
+export function checkAuth() {
+  return !!localStorage.getItem(TOKEN_KEY);
+}
 
+// Вход в систему
+export async function login(login, password) {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(AUTH_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ login, password })
     });
-
-    const result = await response.json();
-
-    if (result.success) {
-      localStorage.setItem('auth', 'true');
-      window.location.href = 'index.html'; // переадресация на главную
-    } else {
-      errorEl.textContent = result.message || 'Ошибка авторизации';
-      errorEl.style.display = 'block';
+    
+    if (!response.ok) throw new Error('Auth failed');
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      localStorage.setItem(TOKEN_KEY, data.token);
+      return true;
     }
-  } catch (e) {
-    errorEl.textContent = 'Ошибка сети или сервера';
-    errorEl.style.display = 'block';
+    
+    return false;
+  } catch (error) {
+    console.error('Login error:', error);
+    return false;
+  }
+}
+
+// Выход из системы
+export function logout() {
+  localStorage.removeItem(TOKEN_KEY);
+  window.location.href = '/auth/login.html';
+}
+
+// Инициализация кнопки выхода
+export function initLogoutButton() {
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
   }
 }
