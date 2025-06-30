@@ -1,73 +1,97 @@
-body.cat-theme {
-  font-family: 'Arial', sans-serif;
-  background-color: #f5f5f5;
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
+  padding-top: 0vh !important;
+  background-color: #f4f4f4;
   color: #111;
 }
 
-h1 {
-  color: #f2c300; /* Caterpillar Yellow */
-  margin-bottom: 0;
+.cat-theme {
+  background-color: #f9f9f9;
+}
+
+.brand {
+  color: #f2c300;
+  margin: 0;
 }
 
 .header {
-  background-color: #111;
-  color: white;
-  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.main-menu, .settings-content {
-  padding: 20px;
+  background-color: #111;
+  color: #fff;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .login-container {
-  max-width: 300px;
-  margin: 100px auto;
-  padding: 30px;
+  max-width: 360px;
+  margin: 10vh auto;
   background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   text-align: center;
 }
 
+.login-container h1 {
+  margin-bottom: 10px;
+}
+
 input {
+  display: block;
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
+  margin: 12px 0;
+  padding: 12px;
   font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 button {
   background-color: #f2c300;
   color: #111;
-  padding: 10px 20px;
   font-weight: bold;
   border: none;
   border-radius: 5px;
+  padding: 12px 20px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
   background-color: #e6b800;
 }
 
-a {
-  display: block;
-  margin: 10px 0;
-  color: #111;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 .error {
   color: red;
   font-size: 14px;
+  margin-top: 10px;
+}
+
+.menu {
+  max-width: 600px;
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+.menu-button {
+  background-color: #111;
+  color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: #333;
 }
