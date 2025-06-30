@@ -1,90 +1,47 @@
 // Конфигурация
 const AUTH_API_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
 const AUTH_TOKEN_KEY = 'gts_auth_token';
-const AUTH_REMEMBER_KEY = 'gts_remember_data';
 
-// Основная функция авторизации
-async function performLogin(credentials, remember = false) {
-  try {
-    const response = await fetch(AUTH_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
-    });
-
-    if (!response.ok) throw new Error('Ошибка сервера');
-
-    const data = await response.json();
-    
-    if (data.success) {
-      localStorage.setItem(AUTH_TOKEN_KEY, data.token);
-      
-      if (remember) {
-        const expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 7);
-        localStorage.setItem(AUTH_REMEMBER_KEY, JSON.stringify({
-          username: credentials.username,
-          expire: expireDate.getTime()
-        }));
-      }
-      
-      return true;
-    }
-    
-    throw new Error(data.message || 'Неверные учетные данные');
-  } catch (error) {
-    console.error('Ошибка авторизации:', error);
-    throw error;
-  }
-}
-
-// Проверка сохраненных данных
-function getRememberedUser() {
-  const rememberData = localStorage.getItem(AUTH_REMEMBER_KEY);
-  if (!rememberData) return null;
-  
-  try {
-    const { username, expire } = JSON.parse(rememberData);
-    return Date.now() > expire ? null : username;
-  } catch {
-    return null;
-  }
-}
-
-// Усиленная проверка авторизации
-function checkAuth() {
+// Проверка авторизации с редиректом
+function checkAuthWithRedirect() {
+  console.log('[Auth] Checking auth status...');
   const token = localStorage.getItem(AUTH_TOKEN_KEY);
-  if (!token) return false;
   
-  // Проверяем структуру токена
-  const isValidToken = token.startsWith('secure-token-') && token.length > 20;
+  if (!token) {
+    console.log('[Auth] No token found, redirecting to login');
+    const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
+    window.location.href = `/app/login?return=${returnUrl}`;
+    return false;
+  }
   
-  // Дополнительная проверка временной метки в токене
-  const tokenTimestamp = parseInt(token.split('-').pop());
-  const isNotExpired = Date.now() - tokenTimestamp < 86400000; // 24 часа
-  
-  return isValidToken && isNotExpired;
-}
-
-// Принудительный выход с очисткой
-function forceLogout() {
-  localStorage.removeItem(AUTH_TOKEN_KEY);
-  localStorage.removeItem(AUTH_REMEMBER_KEY);
-  sessionStorage.clear();
-  window.location.href = `/app/login?r=${Date.now()}&reason=session_expired`;
+  console.log('[Auth] Token exists:', token);
+  return true;
 }
 
 // Экспорт функций
 export const authService = {
-  login: performLogin,
-  logout: forceLogout,
-  checkAuth,
-  getRememberedUser
-};
+  login: async (credentials) => {
+    console.log('[Auth] Attempting login with:', credentials.username);
+    try {
+      const response = await fetch(AUTH_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+      });
 
-// Глобальная проверка при загрузке (если не на странице логина)
-if (!window.location.pathname.includes('/app/login')) {
-  if (!authService.checkAuth()) {
-    authService.logout();
-  }
-}
+      const data = await response.json();
+      console.log('[Auth] Login response:', data);
+
+      if (data.success) {
+        localStorage.setItem(AUTH_TOKEN_KEY, data.token);
+        console.log('[Auth] Login successful, token saved');
+        return true;
+      }
+      throw new Error(data.message || 'Login failed');
+    } catch (error) {
+      console.error('[Auth] Login error:', error);
+      throw error;
+    }
+  },
+  checkAuthWithRedirect
+};
