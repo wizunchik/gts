@@ -6,7 +6,6 @@
   --cat-dark-gray: #333333;
   --cat-red: #E31937;
   --cat-blue: #0066B3;
-  --overdue-pink: #FFE6EB;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -19,8 +18,8 @@
   padding: 0;
 }
 
-html {
-  font-size: 16px;
+html, body {
+  height: 100%;
 }
 
 body {
@@ -29,97 +28,63 @@ body {
   color: var(--cat-dark-gray);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-}
-
-/* ===== Typography ===== */
-h1, h2, h3, h4 {
-  font-weight: 500;
-  color: var(--cat-black);
-  margin-bottom: 1rem;
-}
-
-h1 { font-size: 2rem; }
-h2 { font-size: 1.75rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
-
-p {
-  margin-bottom: 1rem;
-}
-
-a {
-  color: var(--cat-blue);
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-a:hover {
-  color: var(--cat-black);
-}
-
-/* ===== Auth Page Styles ===== */
-.auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: var(--cat-gray);
-  padding: 1rem;
+  padding: 20px;
 }
 
-.auth-wrapper {
+/* ===== Auth Container ===== */
+.auth-container {
   width: 100%;
-  max-width: 28rem;
-}
-
-.auth-box {
+  max-width: 400px;
   background: white;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   box-shadow: var(--shadow-lg);
-  padding: 2.5rem;
+  padding: 40px;
   text-align: center;
   animation: fadeIn 0.4s ease-out;
 }
 
-.auth-header {
-  margin-bottom: 2rem;
-}
-
 .auth-logo {
-  height: 3.75rem;
-  margin-bottom: 1rem;
+  height: 60px;
+  margin-bottom: 20px;
 }
 
 .auth-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 24px;
+  color: var(--cat-black);
+  margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .auth-subtitle {
   color: var(--cat-dark-gray);
-  font-size: 0.875rem;
-  margin-bottom: 2rem;
+  font-size: 14px;
+  margin-bottom: 30px;
 }
 
+/* ===== Form Elements ===== */
 .auth-form .input-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 20px;
   text-align: left;
 }
 
 .auth-form label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
   font-weight: 500;
   color: var(--cat-dark-gray);
-  font-size: 0.875rem;
+  font-size: 14px;
 }
 
-.auth-form input {
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 12px 15px;
   border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  font-size: 0.9375rem;
+  border-radius: 4px;
+  font-size: 15px;
   transition: var(--transition);
 }
 
@@ -132,33 +97,32 @@ a:hover {
 .remember-me {
   display: flex;
   align-items: center;
-  margin: 1.25rem 0;
-  font-size: 0.875rem;
+  margin: 20px 0;
+  justify-content: flex-start;
 }
 
 .remember-me input {
-  margin-right: 0.5rem;
+  margin-right: 10px;
 }
 
-.auth-footer {
-  margin-top: 1.25rem;
-  font-size: 0.8125rem;
-  color: var(--cat-dark-gray);
+.remember-me label {
+  margin-bottom: 0;
+  font-weight: normal;
 }
 
-/* ===== Button Styles ===== */
 .btn {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 12px 24px;
   background-color: var(--cat-yellow);
   color: var(--cat-black);
   border: none;
-  border-radius: 0.25rem;
-  font-size: 1rem;
+  border-radius: 4px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
   text-align: center;
+  width: 100%;
 }
 
 .btn:hover {
@@ -167,117 +131,17 @@ a:hover {
   box-shadow: var(--shadow-sm);
 }
 
-.btn:active {
-  transform: translateY(0);
-}
-
-.btn-block {
-  display: block;
-  width: 100%;
-}
-
-.btn-secondary {
-  background-color: var(--cat-dark-gray);
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: #222;
-}
-
-.btn-danger {
-  background-color: var(--cat-red);
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: #c0102f;
-}
-
-/* ===== Header Styles ===== */
-.header {
-  background-color: var(--cat-black);
-  color: white;
-  padding: 1rem 0;
-  box-shadow: var(--shadow-md);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 75rem;
-  margin: 0 auto;
-  padding: 0 1.25rem;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 2.5rem;
-  margin-right: 1rem;
-}
-
-.logo-text {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--cat-yellow);
-}
-
-/* ===== Main App Styles ===== */
-.app-container {
-  max-width: 75rem;
-  margin: 2rem auto;
-  padding: 0 1.25rem;
-}
-
-.menu-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.5rem;
-}
-
-.menu-card {
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow-sm);
-  padding: 1.5rem;
-  transition: var(--transition);
-}
-
-.menu-card:hover {
-  transform: translateY(-0.25rem);
-  box-shadow: var(--shadow-md);
-}
-
-.menu-link {
-  display: block;
-  padding: 0.75rem;
-  color: var(--cat-dark-gray);
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-/* ===== Utility Classes ===== */
 .error-message {
   color: var(--cat-red);
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
+  margin-top: 15px;
+  font-size: 14px;
+  min-height: 20px;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.hidden {
-  display: none;
+.auth-footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--cat-dark-gray);
 }
 
 /* ===== Animations ===== */
@@ -290,36 +154,17 @@ a:hover {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-/* ===== Responsive Styles ===== */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .logo {
-    margin-bottom: 0.75rem;
-  }
-  
-  .menu-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .auth-box {
-    padding: 1.5rem;
-  }
-}
-
+/* ===== Responsive ===== */
 @media (max-width: 480px) {
-  html {
-    font-size: 14px;
+  .auth-container {
+    padding: 30px 20px;
   }
   
-  .auth-box {
-    padding: 1.25rem;
+  .auth-title {
+    font-size: 20px;
   }
   
   .btn {
-    padding: 0.75rem;
+    padding: 10px 20px;
   }
 }
