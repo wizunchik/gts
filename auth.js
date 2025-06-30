@@ -51,30 +51,40 @@ function getRememberedUser() {
   }
 }
 
-// Проверка авторизации с редиректом
-function checkAuthWithRedirect() {
+// Усиленная проверка авторизации
+function checkAuth() {
   const token = localStorage.getItem(AUTH_TOKEN_KEY);
-  if (!token) {
-    authService.logout();
-    return false;
-  }
-  return true;
+  if (!token) return false;
+  
+  // Проверяем структуру токена
+  const isValidToken = token.startsWith('secure-token-') && token.length > 20;
+  
+  // Дополнительная проверка временной метки в токене
+  const tokenTimestamp = parseInt(token.split('-').pop());
+  const isNotExpired = Date.now() - tokenTimestamp < 86400000; // 24 часа
+  
+  return isValidToken && isNotExpired;
+}
+
+// Принудительный выход с очисткой
+function forceLogout() {
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+  localStorage.removeItem(AUTH_REMEMBER_KEY);
+  sessionStorage.clear();
+  window.location.href = `/app/login?r=${Date.now()}&reason=session_expired`;
 }
 
 // Экспорт функций
 export const authService = {
   login: performLogin,
-  logout: () => {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-    localStorage.removeItem(AUTH_REMEMBER_KEY);
-    window.location.href = '/app/login'; // Редирект на логин
-  },
-  checkAuth: () => !!localStorage.getItem(AUTH_TOKEN_KEY),
-  checkAuthWithRedirect, // Новая функция для принудительного редиректа
+  logout: forceLogout,
+  checkAuth,
   getRememberedUser
 };
 
-// Глобальная проверка при загрузке скрипта (если не на странице логина)
-if (!window.location.pathname.includes('/app/login') && !authService.checkAuth()) {
-  authService.logout();
+// Глобальная проверка при загрузке (если не на странице логина)
+if (!window.location.pathname.includes('/app/login')) {
+  if (!authService.checkAuth()) {
+    authService.logout();
+  }
 }
