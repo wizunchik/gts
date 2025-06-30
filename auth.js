@@ -12,7 +12,7 @@ async function performLogin(credentials, remember = false) {
       body: JSON.stringify(credentials)
     });
 
-    if (!response.ok) throw new Error('Server error');
+    if (!response.ok) throw new Error('Ошибка сервера');
 
     const data = await response.json();
     
@@ -31,9 +31,9 @@ async function performLogin(credentials, remember = false) {
       return true;
     }
     
-    throw new Error(data.message || 'Invalid credentials');
+    throw new Error(data.message || 'Неверные учетные данные');
   } catch (error) {
-    console.error('Authentication error:', error);
+    console.error('Ошибка авторизации:', error);
     throw error;
   }
 }
@@ -57,6 +57,7 @@ export const authService = {
   logout: () => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_REMEMBER_KEY);
+    window.location.href = '/app/login';
   },
   checkAuth: () => !!localStorage.getItem(AUTH_TOKEN_KEY),
   getRememberedUser
