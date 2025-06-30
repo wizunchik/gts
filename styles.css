@@ -1,3 +1,4 @@
+/* Базовая стилизация */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
@@ -11,12 +12,14 @@ body {
   background-color: #f9f9f9;
 }
 
+/* Layout */
 .app-layout {
   display: flex;
   height: 100vh;
   overflow: hidden;
 }
 
+/* Левое меню */
 .sidebar {
   width: 220px;
   background-color: #ffffff;
@@ -34,7 +37,7 @@ body {
 }
 
 .sidebar-logo img {
-  max-width: 120px;
+  max-width: 140px;
   height: auto;
 }
 
@@ -57,6 +60,7 @@ body {
   background-color: #f2f2f2;
 }
 
+/* Контентная область */
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -64,6 +68,7 @@ body {
   background-color: #f4f4f4;
 }
 
+/* Верхняя панель */
 .topbar {
   background-color: #fff;
   padding: 15px 20px;
@@ -87,6 +92,7 @@ body {
   background-color: #e0b700;
 }
 
+/* Контентные блоки */
 .content-block {
   padding: 30px;
   background-color: white;
@@ -95,47 +101,59 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* Login-specific */
+/* Окно авторизации */
 .login-container {
-  max-width: 360px;
+  max-width: 400px;
   margin: 10vh auto;
   background: white;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
   text-align: center;
 }
 
-.login-container h1 {
-  color: #f2c300;
-  margin-bottom: 10px;
+.login-logo {
+  margin-bottom: 20px;
 }
 
-input {
-  display: block;
+.login-logo img {
+  max-width: 160px;
+  height: auto;
+}
+
+.login-container h2 {
+  margin-bottom: 25px;
+  font-size: 20px;
+  color: #111;
+}
+
+.login-container input {
   width: 100%;
-  margin: 12px 0;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.login-container button {
+  width: 100%;
   padding: 12px;
   font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-button {
+  font-weight: bold;
   background-color: #f2c300;
   color: #111;
-  font-weight: bold;
   border: none;
-  border-radius: 5px;
-  padding: 12px 20px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
 }
 
-button:hover {
-  background-color: #e6b800;
+.login-container button:hover {
+  background-color: #e0b700;
 }
 
+/* Сообщение об ошибке */
 .error {
   color: red;
   font-size: 14px;
