@@ -1,4 +1,4 @@
-/* Базовая стилизация */
+/* === БАЗОВЫЕ СТИЛИ === */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
@@ -12,14 +12,14 @@ body {
   background-color: #f9f9f9;
 }
 
-/* Layout */
+/* === ОСНОВНАЯ СЕТКА === */
 .app-layout {
   display: flex;
   height: 100vh;
   overflow: hidden;
 }
 
-/* Левое меню */
+/* === ЛЕВОЕ МЕНЮ === */
 .sidebar {
   width: 220px;
   background-color: #ffffff;
@@ -60,7 +60,7 @@ body {
   background-color: #f2f2f2;
 }
 
-/* Контентная область */
+/* === КОНТЕНТНАЯ ЧАСТЬ === */
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -68,7 +68,7 @@ body {
   background-color: #f4f4f4;
 }
 
-/* Верхняя панель */
+/* === ВЕРХНЯЯ ПАНЕЛЬ === */
 .topbar {
   background-color: #fff;
   padding: 15px 20px;
@@ -92,7 +92,7 @@ body {
   background-color: #e0b700;
 }
 
-/* Контентные блоки */
+/* === КОНТЕНТНЫЕ БЛОКИ === */
 .content-block {
   padding: 30px;
   background-color: white;
@@ -101,7 +101,7 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* Окно авторизации */
+/* === АВТОРИЗАЦИЯ === */
 .login-container {
   max-width: 400px;
   margin: 10vh auto;
@@ -127,25 +127,30 @@ body {
   color: #111;
 }
 
-.login-container input {
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-container input,
+.login-container button {
   width: 100%;
   padding: 12px 14px;
-  margin-bottom: 15px;
   font-size: 16px;
   border-radius: 6px;
-  border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
+.login-container input {
+  border: 1px solid #ccc;
+}
+
 .login-container button {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
   font-weight: bold;
   background-color: #f2c300;
   color: #111;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -153,9 +158,9 @@ body {
   background-color: #e0b700;
 }
 
-/* Сообщение об ошибке */
+/* === СООБЩЕНИЕ ОБ ОШИБКЕ === */
 .error {
   color: red;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
