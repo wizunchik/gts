@@ -51,14 +51,30 @@ function getRememberedUser() {
   }
 }
 
+// Проверка авторизации с редиректом
+function checkAuthWithRedirect() {
+  const token = localStorage.getItem(AUTH_TOKEN_KEY);
+  if (!token) {
+    authService.logout();
+    return false;
+  }
+  return true;
+}
+
 // Экспорт функций
 export const authService = {
   login: performLogin,
   logout: () => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_REMEMBER_KEY);
-    window.location.href = '/app/login';
+    window.location.href = '/app/login'; // Редирект на логин
   },
   checkAuth: () => !!localStorage.getItem(AUTH_TOKEN_KEY),
+  checkAuthWithRedirect, // Новая функция для принудительного редиректа
   getRememberedUser
 };
+
+// Глобальная проверка при загрузке скрипта (если не на странице логина)
+if (!window.location.pathname.includes('/app/login') && !authService.checkAuth()) {
+  authService.logout();
+}
