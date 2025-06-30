@@ -6,10 +6,7 @@ function login() {
   const login = document.getElementById("loginInput")?.value;
   const password = document.getElementById("passwordInput")?.value;
 
-  if (!login || !password) {
-    console.warn("Логин или пароль пустые");
-    return;
-  }
+  if (!login || !password) return;
 
   fetch(API_URL, {
     method: "POST",
@@ -47,7 +44,6 @@ function checkAuth() {
   }
 }
 
-// Назначаем глобально
 window.login = login;
 window.logout = logout;
 window.checkAuth = checkAuth;
