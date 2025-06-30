@@ -445,3 +445,54 @@ body {
   color: var(--cat-red);
   margin-bottom: 1rem;
 }
+/* ===== HEADER STYLES ===== */
+.app-header {
+  background-color: var(--cat-black);
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-nav {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btn-back {
+  background-color: var(--cat-gray);
+  color: var(--cat-black);
+}
+
+.btn-home {
+  background-color: var(--cat-blue);
+  color: white;
+}
+
+.btn-logout {
+  background-color: var(--cat-red);
+  color: white;
+}
+
+.btn-nav:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
