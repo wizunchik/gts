@@ -20,6 +20,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const topbar = document.querySelector(".topbar");
+  if (topbar && !topbar.querySelector(".menu-toggle")) {
+    const toggle = document.createElement("span");
+    toggle.className = "menu-toggle";
+    toggle.textContent = "☰";
+    toggle.style.fontSize = "24px";
+    toggle.style.cursor = "pointer";
+    toggle.style.marginRight = "16px";
+    toggle.onclick = () => {
+      document.querySelector(".sidebar").classList.toggle("open");
+    };
+    topbar.prepend(toggle);
+  }
+
   if (topbar && !topbar.querySelector("button")) {
     const logoutBtn = document.createElement("button");
     logoutBtn.textContent = "Выход";
