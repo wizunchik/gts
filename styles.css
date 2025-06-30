@@ -73,9 +73,11 @@ body {
   background-color: #fff;
   padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 12px;
   border-bottom: 1px solid #ddd;
+  position: relative;
+  z-index: 999;
 }
 
 .topbar button {
@@ -92,6 +94,12 @@ body {
   background-color: #e0b700;
 }
 
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
 /* === КОНТЕНТНЫЕ БЛОКИ === */
 .content-block {
   padding: 30px;
@@ -101,173 +109,7 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* === АВТОРИЗАЦИЯ === */
-.login-container {
-  max-width: 400px;
-  margin: 10vh auto;
-  background: white;
-  border-radius: 12px;
-  padding: 40px 30px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.login-logo {
-  margin-bottom: 20px;
-}
-
-.login-logo img {
-  max-width: 160px;
-  height: auto;
-}
-
-.login-container h2 {
-  margin-bottom: 25px;
-  font-size: 20px;
-  color: #111;
-}
-
-.login-container form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.login-container input,
-.login-container button {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 16px;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-.login-container input {
-  border: 1px solid #ccc;
-}
-
-.login-container button {
-  font-weight: bold;
-  background-color: #f2c300;
-  color: #111;
-  border: none;
-  cursor: pointer;
-}
-
-.login-container button:hover {
-  background-color: #e0b700;
-}
-
-/* === СООБЩЕНИЕ ОБ ОШИБКЕ === */
-.error {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-}
-/* === ТАБЛИЦА ЦЕНОВОЙ ПОЛИТИКИ === */
-.price-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 15px;
-  background: white;
-}
-
-.price-table th,
-.price-table td {
-  border: 1px solid #ddd;
-  padding: 10px 12px;
-  text-align: left;
-}
-
-.price-table th {
-  background-color: #f2f2f2;
-  font-weight: 600;
-}
-
-.price-table tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.price-table input[type="number"],
-.price-table select {
-  width: 100%;
-  padding: 6px 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* === КНОПКИ === */
-.editor-controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 12px;
-}
-
-.btn {
-  padding: 10px 16px;
-  font-size: 15px;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #f2c300;
-  color: #111;
-}
-
-.btn-primary:hover {
-  background-color: #e0b700;
-}
-
-.btn-delete {
-  background-color: #ff4d4d;
-  color: white;
-}
-
-.btn-delete:hover {
-  background-color: #e63939;
-}
-
-/* === СООБЩЕНИЕ ОБ ОШИБКЕ === */
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-/* === LOADING === */
-.loading {
-  font-size: 14px;
-  color: #333;
-  margin: 15px 0;
-}
-@media (max-width: 480px) {
-  .login-container {
-    margin: 5vh auto;
-    padding: 30px 20px;
-    width: 90%;
-  }
-
-  .login-logo img {
-    max-width: 120px;
-  }
-
-  .login-container h2 {
-    font-size: 18px;
-  }
-
-  .login-container input,
-  .login-container button {
-    font-size: 15px;
-    padding: 10px 12px;
-  }
-}
-
+/* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
 @media (max-width: 768px) {
   .sidebar {
     position: absolute;
@@ -282,22 +124,8 @@ body {
     left: 0;
   }
 
-  .topbar {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    padding: 12px 16px;
-  }
-
-  .topbar .menu-toggle {
+  .menu-toggle {
     display: inline-block;
-    font-size: 24px;
-    margin-right: 12px;
-    cursor: pointer;
   }
 
   .main-content {
