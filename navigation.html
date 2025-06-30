@@ -1,0 +1,62 @@
+<nav class="app-navigation">
+  <div class="nav-content">
+    <div class="nav-actions" id="navActions">
+      <!-- Кнопки будут добавлены динамически -->
+    </div>
+  </div>
+</nav>
+
+<script>
+  function initNavigation() {
+    const path = window.location.pathname;
+    const isLoginPage = path.includes('/app/login');
+    const isMainPage = path.endsWith('/main') || path.endsWith('/app/main') || path.endsWith('/app/');
+    const navActions = document.getElementById('navActions');
+
+    if (!isLoginPage) {
+      // Добавляем кнопку "Домой" если не на главной
+      if (!isMainPage) {
+        navActions.innerHTML += `
+          <a href="/app/main" class="nav-btn btn-home">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Главная</span>
+          </a>
+        `;
+      }
+
+      // Всегда добавляем кнопку выхода
+      navActions.innerHTML += `
+        <button class="nav-btn btn-logout" id="logoutBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Выход</span>
+        </button>
+      `;
+
+      // Обработчик выхода
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+          if (window.authService && typeof window.authService.logout === 'function') {
+            await window.authService.logout();
+          } else {
+            localStorage.removeItem('gts_auth_token');
+            localStorage.removeItem('gts_remember_data');
+            window.location.href = '/app/login';
+          }
+        } catch (error) {
+          console.error('Ошибка при выходе:', error);
+          window.location.href = '/app/login';
+        }
+      });
+    }
+  }
+
+  // Инициализируем после загрузки DOM
+  document.addEventListener('DOMContentLoaded', initNavigation);
+</script>
