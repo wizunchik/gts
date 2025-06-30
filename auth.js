@@ -1,80 +1,91 @@
-// Конфигурация
-const AUTH_API_URL = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
-const AUTH_TOKEN_KEY = 'gts_auth_token';
-const AUTH_REMEMBER_KEY = 'gts_remember_data';
+/**
+ * Система авторизации GTS ERP
+ */
 
-// Генерация токена
-const generateToken = () => `secure-token-${Math.random().toString(36).slice(2)}-${Date.now()}`;
+const API_ENDPOINT = 'https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j';
 
-// Проверка валидности токена
-const isValidToken = (token) => {
-  if (!token) return false;
-  const parts = token.split('-');
-  return parts.length >= 4 && 
-         parts[0] === 'secure' && 
-         parts[1] === 'token' &&
-         !isNaN(parseInt(parts[parts.length - 1])) &&
-         Date.now() - parseInt(parts[parts.length - 1]) < 86400000; // 24 часа
-};
-
-export const authService = {
-  async login(credentials, remember = false) {
+// Аутентификация пользователя
+async function authenticateUser(username, password) {
     try {
-      const response = await fetch(AUTH_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials)
-      });
-
-      if (!response.ok) throw new Error('Ошибка сервера');
-
-      const data = await response.json();
-      
-      if (data.success) {
-        const token = generateToken();
-        localStorage.setItem(AUTH_TOKEN_KEY, token);
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'login',
+                username: username,
+                password: password
+            })
+        });
         
-        if (remember) {
-          localStorage.setItem(AUTH_REMEMBER_KEY, JSON.stringify({
-            username: credentials.username,
-            expire: Date.now() + 604800000 // 7 дней
-          }));
+        const data = await response.json();
+        
+        if (data.success && data.token) {
+            // Сохраняем токен и время его истечения
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('authExpiry', new Date().getTime() + (24 * 60 * 60 * 1000)); // 24 часа
+            return { success: true };
+        } else {
+            return { success: false, message: data.message || 'Неверный логин или пароль' };
         }
-        
-        return true;
-      }
-      
-      throw new Error(data.message || 'Неверные учетные данные');
     } catch (error) {
-      console.error('Auth error:', error);
-      throw error;
+        console.error('Ошибка авторизации:', error);
+        return { success: false, message: 'Ошибка соединения с сервером' };
     }
-  },
+}
 
-  logout() {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-    localStorage.removeItem(AUTH_REMEMBER_KEY);
-    window.location.href = `/app/login?reason=logout&t=${Date.now()}`;
-  },
-
-  isAuthenticated() {
-    return isValidToken(localStorage.getItem(AUTH_TOKEN_KEY));
-  },
-
-  checkAuth() {
-    if (!this.isAuthenticated()) {
-      window.location.href = `/app/login?return=${encodeURIComponent(window.location.pathname)}`;
-      return false;
+// Проверка авторизации
+async function checkAuth() {
+    const token = localStorage.getItem('authToken');
+    const expiry = localStorage.getItem('authExpiry');
+    
+    // Проверяем наличие и срок действия токена
+    if (!token || !expiry || new Date().getTime() > parseInt(expiry)) {
+        return false;
     }
-    return true;
-  },
-
-  getRememberedUser() {
+    
+    // Дополнительная проверка токена на сервере
     try {
-      const data = JSON.parse(localStorage.getItem(AUTH_REMEMBER_KEY) || 'null');
-      return data && Date.now() < data.expire ? data.username : null;
-    } catch {
-      return null;
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                action: 'validate'
+            })
+        });
+        
+        const data = await response.json();
+        return data.success === true;
+    } catch (error) {
+        console.error('Ошибка проверки токена:', error);
+        return false;
     }
-  }
-};
+}
+
+// Получение информации о пользователе
+async function getUserInfo() {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null;
+    
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                action: 'userinfo'
+            })
+        });
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Ошибка получения информации о пользователе:', error);
+        return null;
+    }
+}
