@@ -19,24 +19,47 @@ document.addEventListener("DOMContentLoaded", () => {
     layout.prepend(sidebar);
   }
 
+  // Кнопка Выход в topbar
   const topbar = document.querySelector(".topbar");
-  if (topbar && !topbar.querySelector(".menu-toggle")) {
-    const toggle = document.createElement("span");
-    toggle.className = "menu-toggle";
-    toggle.textContent = "☰";
-    toggle.style.fontSize = "24px";
-    toggle.style.cursor = "pointer";
-    toggle.style.marginRight = "16px";
-    toggle.onclick = () => {
-      document.querySelector(".sidebar").classList.toggle("open");
-    };
-    topbar.prepend(toggle);
-  }
-
   if (topbar && !topbar.querySelector("button")) {
     const logoutBtn = document.createElement("button");
     logoutBtn.textContent = "Выход";
     logoutBtn.onclick = () => logout();
     topbar.appendChild(logoutBtn);
   }
+
+  // Гамбургер
+  const toggle = document.querySelector(".menu-toggle");
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const sidebar = document.querySelector(".sidebar");
+      sidebar.classList.toggle("open");
+      document.body.classList.toggle("menu-open", sidebar.classList.contains("open"));
+    });
+  }
+
+  // Клик вне меню
+  document.addEventListener("click", (e) => {
+    const sidebar = document.querySelector(".sidebar");
+    const toggle = document.querySelector(".menu-toggle");
+    if (
+      sidebar &&
+      sidebar.classList.contains("open") &&
+      !sidebar.contains(e.target) &&
+      e.target !== toggle
+    ) {
+      sidebar.classList.remove("open");
+      document.body.classList.remove("menu-open");
+    }
+  });
+
+  // Закрытие при переходе по ссылке
+  document.querySelectorAll(".sidebar-nav a").forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 768) {
+        document.querySelector(".sidebar").classList.remove("open");
+        document.body.classList.remove("menu-open");
+      }
+    });
+  });
 });
