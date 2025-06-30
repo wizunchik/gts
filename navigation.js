@@ -2,12 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.getElementById("nav");
   if (nav) {
     nav.innerHTML = `
-      <button onclick="goHome()">🏠 Главная</button>
-      <button onclick="logout()">🚪 Выйти</button>
+      <button onclick="window.location.href='/app/main'" style="margin-right: 10px">🏠 Главная</button>
+      <button onclick="logout()">🚪 Выход</button>
     `;
   }
 });
-
-function goHome() {
-  window.location.href = "/app/main";
-}
