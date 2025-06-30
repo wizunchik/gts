@@ -4,11 +4,9 @@ function initNavigation() {
     const navPanel = document.createElement('nav');
     navPanel.className = 'app-navigation';
     
-    // Создаем контейнер для содержимого
     const navContent = document.createElement('div');
     navContent.className = 'nav-content';
     
-    // Добавляем кнопки навигации
     const navActions = document.createElement('div');
     navActions.className = 'nav-actions';
     
@@ -16,17 +14,15 @@ function initNavigation() {
     if (!isMainPage()) {
         addNavButton(navActions, 'Главная', '/app/main', 'home');
     }
-    addNavButton(navActions, 'Выход', '', 'logout', true);
+    
+    // Важно: создаем кнопку выхода с правильным обработчиком
+    const logoutBtn = addNavButton(navActions, 'Выход', '', 'logout', true);
+    setupLogoutHandler(logoutBtn);
     
     // Собираем структуру
     navContent.appendChild(navActions);
     navPanel.appendChild(navContent);
-    
-    // Вставляем в начало body
     document.body.insertBefore(navPanel, document.body.firstChild);
-    
-    // Добавляем обработчики
-    setupNavHandlers();
 }
 
 // Проверка главной страницы
@@ -40,7 +36,7 @@ function addNavButton(container, text, url, icon, isButton = false) {
     const btn = isButton ? document.createElement('button') : document.createElement('a');
     btn.className = `nav-btn btn-${icon}`;
     
-    if (!isButton) {
+    if (!isButton && url) {
         btn.href = url;
     }
     
@@ -64,19 +60,24 @@ function getIconSvg(icon) {
     return icons[icon] || '';
 }
 
-// Настройка обработчиков
-function setupNavHandlers() {
-    // Обработчик кнопки выхода
-    const logoutBtn = document.querySelector('.btn-logout');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            if (window.authService) {
-                window.authService.logout();
+// Обработчик выхода
+function setupLogoutHandler(button) {
+    button.addEventListener('click', async () => {
+        try {
+            // Проверяем наличие authService
+            if (window.authService && typeof window.authService.logout === 'function') {
+                await window.authService.logout();
             } else {
+                // Резервный вариант, если authService не доступен
+                localStorage.removeItem('gts_auth_token');
+                localStorage.removeItem('gts_remember_data');
                 window.location.href = '/app/login';
             }
-        });
-    }
+        } catch (error) {
+            console.error('Ошибка при выходе:', error);
+            window.location.href = '/app/login';
+        }
+    });
 }
 
 export { initNavigation };
