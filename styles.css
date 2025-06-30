@@ -364,3 +364,84 @@ body {
 .fade-in {
   animation: fadeIn 0.3s ease-out forwards;
 }
+/* ===== PRICE EDITOR STYLES ===== */
+.editor-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.editor-title {
+  font-size: 1.5rem;
+  color: var(--cat-black);
+}
+
+.editor-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.price-table th {
+  background-color: var(--cat-gray);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+.price-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.price-table select,
+.price-table input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #FAFAFA;
+}
+
+.price-table select:focus,
+.price-table input:focus {
+  outline: none;
+  border-color: var(--cat-yellow);
+  box-shadow: 0 0 0 3px rgba(255,205,17,0.2);
+}
+
+.btn-delete {
+  background-color: var(--cat-red);
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.btn-delete:hover {
+  background-color: #c0102f;
+}
+
+.loading {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-message {
+  color: var(--cat-red);
+  margin-bottom: 1rem;
+}
