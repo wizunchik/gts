@@ -4,7 +4,7 @@ const AUTH_TOKEN_KEY = 'gts_auth_token';
 const AUTH_REMEMBER_KEY = 'gts_remember_data';
 
 // Основная функция авторизации
-async function authenticateUser(credentials, remember = false) {
+async function performLogin(credentials, remember = false) {
   try {
     const response = await fetch(AUTH_API_URL, {
       method: 'POST',
@@ -23,7 +23,7 @@ async function authenticateUser(credentials, remember = false) {
         const expireDate = new Date();
         expireDate.setDate(expireDate.getDate() + 7);
         localStorage.setItem(AUTH_REMEMBER_KEY, JSON.stringify({
-          username: credentials.login,
+          username: credentials.username,
           expire: expireDate.getTime()
         }));
       }
@@ -39,7 +39,7 @@ async function authenticateUser(credentials, remember = false) {
 }
 
 // Проверка сохраненных данных
-function checkRememberedUser() {
+function getRememberedUser() {
   const rememberData = localStorage.getItem(AUTH_REMEMBER_KEY);
   if (!rememberData) return null;
   
@@ -53,11 +53,11 @@ function checkRememberedUser() {
 
 // Экспорт функций
 export const authService = {
-  login: authenticateUser,
+  login: performLogin,
   logout: () => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(AUTH_REMEMBER_KEY);
   },
   checkAuth: () => !!localStorage.getItem(AUTH_TOKEN_KEY),
-  getRememberedUser: checkRememberedUser
+  getRememberedUser
 };
