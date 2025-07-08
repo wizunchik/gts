@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <nav class="sidebar-nav">
         <a href="/app/main">Главная</a>
+        <a href="/app/purchase">Закупки</a>
         <a href="/app/supplies">Приёмки</a>
         <a href="/app/shipments">Отгрузки</a>
         <a href="/app/reports">Отчёты</a>
