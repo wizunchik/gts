@@ -218,4 +218,59 @@ body {
   .form-group {
     width: 100%;
   }
+
+  
+/* === СТИЛИ ДЛЯ supplier-form === */
+.supplier-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
+
+.supplier-form-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.supplier-form-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.supplier-form-input {
+  width: 30vw;
+  max-width: 400px;
+  min-width: 260px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+textarea.supplier-form-input {
+  resize: vertical;
+  height: auto;
+  min-height: 80px;
+}
+
+/* === Общий блок управления === */
+.editor-controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#status {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+}
+
