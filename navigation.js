@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <img src="https://static.tildacdn.com/tild6130-3163-4265-b363-383632316137/GTS_LOGO_BLACK.png" alt="GTS Logo" />
       </div>
       <nav class="sidebar-nav">
-        <a href="/app/main">Главная</a>
-        <a href="/app/purchase">Закупки</a>
-        <a href="/app/supplies">Приёмки</a>
-        <a href="/app/shipments">Отгрузки</a>
-        <a href="/app/reports">Отчёты</a>
-        <a href="/app/settings">Настройки</a>
+        <a href="/app/main">Main</a>
+        <a href="/app/purchase">Purchases</a>
+        <a href="/app/supplies">Receiving</a>
+        <a href="/app/shipments">Shipments</a>
+        <a href="/app/reports">Reports</a>
+        <a href="/app/settings">Settings</a>
       </nav>
     `;
     layout.prepend(sidebar);
