@@ -1,20 +1,21 @@
+
 /* === ПЕРЕМЕННЫЕ (если подключите CSS vars) === */
-/* :root {
+:root {
   --cat-yellow: #f2c300;
   --cat-black: #111;
   --cat-gray: #f4f4f4;
   --cat-red: #ff4d4d;
   --shadow-sm: 0 0 10px rgba(0,0,0,0.05);
-} */
+}
 
 /* === БАЗОВЫЕ СТИЛИ === */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: var(--cat-gray);
   padding-top: 0vh !important;
-  color: #111;
+  color: var(--cat-black);
 }
 
 .cat-theme {
@@ -32,7 +33,7 @@ body {
 .sidebar {
   width: 220px;
   background-color: #fff;
-  color: #111;
+  color: var(--cat-black);
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -61,7 +62,7 @@ body {
   display: block;
   padding: 14px 20px;
   text-decoration: none;
-  color: #111;
+  color: var(--cat-black);
   font-size: 16px;
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.2s ease;
@@ -76,7 +77,7 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background-color: #f4f4f4;
+  background-color: var(--cat-gray);
   min-height: 100vh;
 }
 
@@ -100,8 +101,8 @@ body {
 }
 
 .topbar button {
-  background-color: #f2c300;
-  color: #111;
+  background-color: var(--cat-yellow);
+  color: var(--cat-black);
   font-weight: bold;
   border: none;
   padding: 8px 14px;
@@ -119,123 +120,46 @@ body {
   background-color: white;
   margin: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-sm);
 }
 
-/* === АВТОРИЗАЦИЯ === */
-.login-container {
-  max-width: 400px;
-  margin: 10vh auto;
-  background: white;
-  border-radius: 12px;
-  padding: 40px 30px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.login-logo {
-  margin-bottom: 20px;
-}
-
-.login-logo img {
-  max-width: 160px;
-  height: auto;
-}
-
-.login-container h2 {
-  margin-bottom: 25px;
+.content-block h2 {
   font-size: 20px;
-  color: #111;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--cat-black);
 }
 
-.login-container form {
+/* === ФОРМА ПОСТАВЩИКОВ === */
+.form-fields {
+  margin-top: 25px;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  margin-bottom: 15px;
+  width: 30%;
+  min-width: 280px;
 }
 
-.login-container input,
-.login-container button {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 16px;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-.login-container input {
-  border: 1px solid #ccc;
-}
-
-.login-container button {
-  font-weight: bold;
-  background-color: #f2c300;
-  color: #111;
-  border: none;
-  cursor: pointer;
-}
-
-.login-container button:hover {
-  background-color: #e0b700;
-}
-
-/* === ОШИБКИ === */
-.error, .error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-/* === ЗАГРУЗКА === */
-.loading {
-  font-size: 14px;
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 500;
   color: #333;
-  margin: 15px 0;
-  text-align: center;
 }
 
-/* === ТАБЛИЦА === */
-.price-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 15px;
-  background: white;
-}
-
-.price-table th,
-.price-table td {
-  border: 1px solid #ddd;
+.input-field {
   padding: 10px 12px;
-  text-align: left;
-}
-
-.price-table th {
-  background-color: #f2f2f2;
-  font-weight: 600;
-}
-
-.price-table tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.price-table input[type="number"],
-.price-table select {
-  width: 100%;
-  padding: 6px 8px;
-  font-size: 14px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  font-size: 15px;
+  background-color: #fff;
+  width: 100%;
   box-sizing: border-box;
 }
 
 /* === КНОПКИ === */
-.editor-controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 12px;
-}
-
 .btn {
   padding: 10px 16px;
   font-size: 15px;
@@ -246,8 +170,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #f2c300;
-  color: #111;
+  background-color: var(--cat-yellow);
+  color: var(--cat-black);
 }
 
 .btn-primary:hover {
@@ -255,7 +179,7 @@ body {
 }
 
 .btn-delete {
-  background-color: #ff4d4d;
+  background-color: var(--cat-red);
   color: white;
 }
 
@@ -290,202 +214,8 @@ body {
     margin: 10px 0;
     padding: 20px;
   }
-}
-
-@media (max-width: 480px) {
-  .login-container {
-    margin: 5vh auto;
-    padding: 30px 20px;
-    width: 90%;
-  }
-
-  .login-logo img {
-    max-width: 120px;
-  }
-
-  .login-container h2 {
-    font-size: 18px;
-  }
-
-  .login-container input,
-  .login-container button {
-    font-size: 15px;
-    padding: 10px 12px;
-  }
 
   .form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #333;
-}
-
-.input-field {
-  padding: 10px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-  background-color: #fff;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.form-fields {
-  margin-top: 25px;
-}
-
-.content-block h2 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #111;
-}
-
-  /* === Стили для страницы "Найти поставщика" === */
-#supplierFields input,
-#supplierFields select,
-#supplierFields textarea {
-  width: 30vw;
-  max-width: 500px;
-  min-width: 250px;
-  padding: 10px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-#supplierFields table {
-  width: 100%;
-  max-width: 800px;
-  margin-top: 20px;
-  border-collapse: separate;
-  border-spacing: 0 12px;
-}
-
-#supplierFields th {
-  text-align: left;
-  vertical-align: top;
-  padding-right: 20px;
-  width: 180px;
-  font-weight: normal;
-  color: #333;
-}
-
-/* === ПЕРЕМЕННЫЕ (если подключите CSS vars) === */
-:root {
-  --cat-yellow: #f2c300;
-  --cat-black: #111;
-  --cat-gray: #f4f4f4;
-  --cat-red: #ff4d4d;
-  --shadow-sm: 0 0 10px rgba(0,0,0,0.05);
-}
-
-/* === БАЗОВЫЕ СТИЛИ === */
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--cat-gray);
-  padding-top: 0vh !important;
-  color: var(--cat-black);
-}
-
-.cat-theme {
-  background-color: #f9f9f9;
-}
-
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--cat-gray);
-  min-height: 100vh;
-}
-
-.topbar {
-  background-color: #fff;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-/* === КОНТЕНТНЫЙ БЛОК === */
-.content-block {
-  padding: 30px;
-  background-color: #fff;
-  margin: 30px auto;
-  border-radius: 8px;
-  box-shadow: var(--shadow-sm);
-  width: 90%;
-  max-width: 1000px;
-}
-
-/* === ФОРМА ПОЛЕЙ === */
-.content-block label {
-  display: block;
-  margin-bottom: 12px;
-  font-weight: 500;
-  color: #333;
-}
-
-.content-block input,
-.content-block textarea,
-.content-block select {
-  width: 30vw;
-  max-width: 400px;
-  padding: 10px 12px;
-  font-size: 15px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-/* === КНОПКИ === */
-button {
-  padding: 10px 16px;
-  font-size: 15px;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  background-color: var(--cat-yellow);
-  color: var(--cat-black);
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #e0b700;
-}
-
-/* === СТАТУС === */
-#status {
-  margin-top: 15px;
-  color: #555;
-  font-style: italic;
-}
-
-/* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
-@media (max-width: 768px) {
-  .content-block input,
-  .content-block textarea,
-  .content-block select {
     width: 100%;
   }
 }
