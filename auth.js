@@ -1,6 +1,6 @@
 console.log("auth.js загружен");
 
-const API_URL = "https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j";
+const AUTH_API_URL = "https://functions.yandexcloud.net/d4eik4r1p7bna7gcok5j";
 
 function login() {
   const login = document.getElementById("loginInput")?.value;
@@ -8,7 +8,7 @@ function login() {
 
   if (!login || !password) return;
 
-  fetch(API_URL, {
+  fetch(AUTH_API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ login, password })
